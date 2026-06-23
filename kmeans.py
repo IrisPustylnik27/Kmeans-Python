@@ -37,16 +37,16 @@ def main():
     clusters, vectors = [], []
 
     # taking args
-    if len(sys.argv) < 2:
-        print("not enough arguments")
+    if len(sys.argv) < 2 or len(sys.argv) > 3:
+        print("An Error Has Occured")
         sys.exit(1)  
-
-    if len(sys.argv) > 3:
-        print("too many arguments")
-        sys.exit(1)
 
     if len(sys.argv) == 3:
         maxIter = int(sys.argv[2])
+
+    if maxIter <= 1 or maxIter >= 800:
+        print("Incorrect maximum iteration!")
+        sys.exit(1)  
 
     k = int(sys.argv[1])
     
@@ -61,7 +61,7 @@ def main():
             continue
 
     if k <= 1 or k >= N:
-        print("Invalid number of clusters!")
+        print("Incorrect number of clusters!")
         sys.exit(1)
     
     # Initialize centroids 
