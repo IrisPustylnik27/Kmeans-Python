@@ -1,5 +1,5 @@
-import sys
 
+import sys
 
 class Cluster(object):
 
@@ -34,39 +34,31 @@ def main():
     deltaCentroid = 0.0
     d, N, k, maxIter, counter = 0, 0, 0, 400, 0
     isConverged = False
-    fileName = ""
     clusters, vectors = [], []
 
     # taking args
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 2:
         print("not enough arguments")
         sys.exit(1)  
 
-    if len(sys.argv) > 4:
+    if len(sys.argv) > 3:
         print("too many arguments")
         sys.exit(1)
 
     if len(sys.argv) == 3:
-        fileName = sys.argv[2]
-    
-    if len(sys.argv) == 4:
         maxIter = int(sys.argv[2])
-        fileName = sys.argv[3]
 
     k = int(sys.argv[1])
     
     # read data from file
-    try:
-        with open(fileName, 'r') as f:
-            for line in f:
-                vector = Vector([float(val) for val in line.strip().split(',')])
-                vectors.append(vector)
-                N += 1
-                if d == 0:
-                    d = len(vector.values)
-    except FileNotFoundError:
-        print(f"File {fileName} not found.")
-        sys.exit(1)
+    for line in sys.stdin:
+        vector = Vector([float(val) for val in line.strip().split(',')])
+        vectors.append(vector)
+        N += 1
+        if d == 0:
+            d = len(vector.values)
+        if line == "":
+            continue
 
     if k <= 1 or k >= N:
         print("Invalid number of clusters!")
